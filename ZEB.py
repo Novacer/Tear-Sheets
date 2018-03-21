@@ -3,7 +3,7 @@ import pyfolio as pf
 
 
 prices = pd.read_csv('ZEB Historical Data.csv')
-benchmark = pd.read_csv('SP500 Historical Data.csv')
+benchmark = pd.read_csv('SP TSX Canadian Financials Historical Data.csv')
 
 prices = prices[::-1]
 benchmark = benchmark[::-1]
