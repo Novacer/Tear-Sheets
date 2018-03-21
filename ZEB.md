@@ -1,6 +1,17 @@
 
 
 ```python
+#  Returns Tear Sheet for TSE:ZEB (BMO Equal Weighted Bank Index ETF)
+
+#  Winter 2018 AFM 121 Section 2 Group 11
+
+#  Generated using pyfolio and matplotlib in Python
+
+#  Author: Jack Zhang
+```
+
+
+```python
 %matplotlib inline
 ```
 
@@ -12,26 +23,30 @@ import pyfolio as pf
 
 
 ```python
+# load data from csv as DataFrame
 prices = pd.read_csv('ZEB Historical Data.csv')
 benchmark = pd.read_csv('SP500 Historical Data.csv')
 
-# reverse the DataFrames
+# reverse the rows
 prices = prices[::-1]
 benchmark = benchmark[::-1]
 
+# convert the strings to DateTime objects and set that column as the index
 prices['Date'] = pd.to_datetime(prices.Date)
 prices.set_index('Date', inplace=True)
 
 benchmark['Date'] = pd.to_datetime(benchmark.Date)
 benchmark.set_index('Date', inplace=True)
 
+# divide 'Change %' column by 100
 change = prices['Change %'].div(100)
 bench_change = benchmark['Change %'].div(100)
 
+# drop all the errors caused from division by zero
 change.dropna(inplace=True)
 bench_change.dropna(inplace=True)
 
-# notice to user! rolling fama french has been disabled!!!!!
+# note to self: rolling_fama_french() has been disabled in source file. Change it back later!
 pf.tears.create_returns_tear_sheet(change, benchmark_rets=bench_change)
 ```
 
@@ -201,5 +216,5 @@ pf.tears.create_returns_tear_sheet(change, benchmark_rets=bench_change)
 
 
 
-![png](output_2_3.png)
+![png](output_3_3.png)
 
