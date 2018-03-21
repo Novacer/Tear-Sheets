@@ -11776,7 +11776,13 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#  Returns Tear Sheet for TSE:ZEB (BMO Equal Weighted Bank Index ETF)</span>
+
+<span class="c1">#  Winter 2018 AFM 121 Section 2 Group 11</span>
+
+<span class="c1">#  Generated using pyfolio and matplotlib in Python</span>
+
+<span class="c1">#  Author: Jack Zhang</span>
 </pre></div>
 
 </div>
@@ -11787,6 +11793,19 @@ div#notebook {
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -11800,29 +11819,33 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">prices</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;ZEB Historical Data.csv&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># load data from csv as DataFrame</span>
+<span class="n">prices</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;ZEB Historical Data.csv&#39;</span><span class="p">)</span>
 <span class="n">benchmark</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;SP500 Historical Data.csv&#39;</span><span class="p">)</span>
 
-<span class="c1"># reverse the DataFrames</span>
+<span class="c1"># reverse the rows</span>
 <span class="n">prices</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">benchmark</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
+<span class="c1"># convert the strings to DateTime objects and set that column as the index</span>
 <span class="n">prices</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">prices</span><span class="o">.</span><span class="n">Date</span><span class="p">)</span>
 <span class="n">prices</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">benchmark</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">benchmark</span><span class="o">.</span><span class="n">Date</span><span class="p">)</span>
 <span class="n">benchmark</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
+<span class="c1"># divide &#39;Change %&#39; column by 100</span>
 <span class="n">change</span> <span class="o">=</span> <span class="n">prices</span><span class="p">[</span><span class="s1">&#39;Change %&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
 <span class="n">bench_change</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">[</span><span class="s1">&#39;Change %&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
 
+<span class="c1"># drop all the errors caused from division by zero</span>
 <span class="n">change</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">bench_change</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># notice to user! rolling fama french has been disabled!!!!!</span>
+<span class="c1"># note to self: rolling_fama_french() has been disabled in source file. Change it back later!</span>
 <span class="n">pf</span><span class="o">.</span><span class="n">tears</span><span class="o">.</span><span class="n">create_returns_tear_sheet</span><span class="p">(</span><span class="n">change</span><span class="p">,</span> <span class="n">benchmark_rets</span><span class="o">=</span><span class="n">bench_change</span><span class="p">)</span>
 </pre></div>
 
